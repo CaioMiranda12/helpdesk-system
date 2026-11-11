@@ -5,7 +5,7 @@ from app.api.v1.tickets import router as tickets_router
 app = FastAPI(
     title="Helpdesk API",
     description="API do Sistema de Gestão de Chamados",
-    version="0.4.0",
+    version="0.5.0",
 )
 
 # O navegador só pode acessar a API a partir das origens de desenvolvimento listadas.

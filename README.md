@@ -79,3 +79,7 @@ npm run dev
 ```
 
 Abra http://localhost:5173. Configure `frontend/.env` a partir de `.env.example` somente se necessário.
+
+## Sprint 05 — Qualidade
+
+Testes de regressão da API, paginação confiável, recuperação de erros na listagem e tipagem de ambiente do Vite. Consulte [docs/sprint-05.md](docs/sprint-05.md).
