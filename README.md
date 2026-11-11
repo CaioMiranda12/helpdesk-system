@@ -61,3 +61,6 @@ O MVP inicial não terá autenticação. Use apenas dados fictícios e não publ
 
 ## Sprint 02 — Banco de dados
 Leia [docs/sprint-02.md](docs/sprint-02.md) para configurar PostgreSQL, validar a conexão e aplicar a migration. A API de chamados será implementada na Sprint 03.
+
+## Sprint 03
+API de chamados implementada. Consulte `docs/sprint-03.md` para endpoints, testes e commits.
