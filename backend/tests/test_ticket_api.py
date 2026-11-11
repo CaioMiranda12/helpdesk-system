@@ -1,3 +1,5 @@
+from app.core.security import get_current_user
+from app.models.user import User
 import uuid
 import pytest
 from fastapi.testclient import TestClient
@@ -20,6 +22,7 @@ def client():
         with Session(engine) as session:
             yield session
     app.dependency_overrides[get_db] = override_db
+    app.dependency_overrides[get_current_user] = lambda: User(email="tester@example.com", name="Tester", role="admin", password_hash="unused")
     try:
         yield TestClient(app)
     finally:
