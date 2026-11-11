@@ -3,8 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.tickets import router as tickets_router
 from app.api.v1.dashboard import router as dashboard_router
 from app.api.v1.auth import router as auth_router
+from app.api.v1.agents import router as agents_router
 
-app = FastAPI(title="Helpdesk API", description="API do Sistema de Gestão de Chamados", version="0.9.0")
+app = FastAPI(title="Helpdesk API", description="API do Sistema de Gestão de Chamados", version="0.10.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -18,5 +19,6 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 app.include_router(auth_router)
+app.include_router(agents_router)
 app.include_router(tickets_router)
 app.include_router(dashboard_router)

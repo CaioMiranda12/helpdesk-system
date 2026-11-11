@@ -2,10 +2,11 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.schemas.ticket import TicketCreate, TicketRead, TicketUpdate, TicketStatusUpdate, Status, Priority
+from app.schemas.ticket import TicketCreate, TicketRead, TicketUpdate, TicketStatusUpdate, TicketAssigneeUpdate, Status, Priority
 from app.services import tickets as service
 
-from app.core.security import get_current_user
+from app.core.security import get_current_user, require_admin
+from app.models.user import User
 
 router = APIRouter(dependencies=[Depends(get_current_user)], prefix="/api/v1/tickets", tags=["Tickets"])
 
@@ -36,3 +37,12 @@ def update_ticket(ticket_id: UUID, payload: TicketUpdate, db: Session = Depends(
 @router.patch("/{ticket_id}/status", response_model=TicketRead)
 def update_status(ticket_id: UUID, payload: TicketStatusUpdate, db: Session = Depends(get_db)):
     return service.change_ticket_status(db, ticket_id, payload.status)
+
+@router.patch("/{ticket_id}/assignee", response_model=TicketRead)
+def update_assignee(
+    ticket_id: UUID,
+    payload: TicketAssigneeUpdate,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin),
+):
+    return service.assign_ticket(db, ticket_id, payload.assignee_id)

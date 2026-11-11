@@ -54,6 +54,16 @@ class TicketUpdate(BaseModel):
 class TicketStatusUpdate(BaseModel):
     status: Status
 
+class TicketAssigneeUpdate(BaseModel):
+    assignee_id: UUID | None
+
+class TicketAssigneeRead(BaseModel):
+    id: UUID
+    name: str
+    email: str
+
+    model_config = ConfigDict(from_attributes=True)
+
 class TicketRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
@@ -61,5 +71,7 @@ class TicketRead(BaseModel):
     description: str
     priority: Priority
     status: Status
+    assignee_id: UUID | None = None
+    assignee: TicketAssigneeRead | None = None
     created_at: datetime
     updated_at: datetime

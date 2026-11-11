@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.models.ticket import Ticket
+from app.models.user import User
 from app.schemas.ticket import TicketCreate, TicketUpdate, Status, Priority
 
 ALLOWED_TRANSITIONS = {
@@ -51,6 +52,21 @@ def update_ticket(db: Session, ticket_id: UUID, data: TicketUpdate) -> Ticket:
     db.commit()
     db.refresh(ticket)
     return ticket
+
+def assign_ticket(db: Session, ticket_id: UUID, assignee_id: UUID | None) -> Ticket:
+    ticket = get_ticket_or_404(db, ticket_id)
+    if assignee_id is not None:
+        user = db.get(User, assignee_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="Agente não encontrado")
+        if user.role != "agent":
+            raise HTTPException(status_code=409, detail="Somente agentes podem ser responsáveis")
+    ticket.assignee_id = assignee_id
+    ticket.updated_at = datetime.now(timezone.utc)
+    db.commit()
+    db.refresh(ticket)
+    return ticket
+
 
 def change_ticket_status(db: Session, ticket_id: UUID, new_status: Status) -> Ticket:
     ticket = get_ticket_or_404(db, ticket_id)
