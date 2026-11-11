@@ -1,14 +1,22 @@
 import axios from 'axios';
-import type { Ticket, TicketCreate, TicketStatus, TicketUpdate } from '../types';
+import type { Priority, Ticket, TicketCreate, TicketStatus, TicketUpdate } from '../types';
 
 const http = axios.create({
   baseURL: (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, ''),
   timeout: 10000,
 });
 
+export interface TicketFilters {
+  search?: string;
+  status?: TicketStatus;
+  priority?: Priority;
+}
+
 export const ticketsApi = {
-  async list(limit = 20, offset = 0): Promise<Ticket[]> {
-    const { data } = await http.get<Ticket[]>('/api/v1/tickets', { params: { limit, offset } });
+  async list(limit = 20, offset = 0, filters: TicketFilters = {}): Promise<Ticket[]> {
+    const { data } = await http.get<Ticket[]>('/api/v1/tickets', {
+      params: { limit, offset, ...filters },
+    });
     return data;
   },
   async get(id: string): Promise<Ticket> {
