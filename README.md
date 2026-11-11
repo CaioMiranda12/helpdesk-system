@@ -60,3 +60,7 @@ Execute `alembic upgrade head` no backend (migration `0004_create_ticket_activit
 ## Sprint 12 — Histórico paginado
 
 A tela de detalhes agora carrega 10 atividades por vez e permite buscar eventos anteriores. O backend ganhou índice de consulta para o histórico. Veja [docs/sprint-12.md](docs/sprint-12.md).
+
+## Sprint 13 — Testes de frontend e apresentação
+
+O frontend agora inclui testes de componentes com **Vitest + React Testing Library**. Em `frontend/`, execute `npm install`, `npm run typecheck`, `npm test` e `npm run build`. Veja [guia da Sprint 13](docs/sprint-13.md) e [roteiro de portfólio](docs/portfolio.md). Os testes não substituem uma validação ponta a ponta com FastAPI e PostgreSQL.
