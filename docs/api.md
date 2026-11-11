@@ -8,3 +8,11 @@
 - `PATCH /api/v1/tickets/{uuid}/status`: recebe `{"status":"in_progress"}`; aceita apenas `open → in_progress`, `in_progress → resolved`, `resolved → in_progress`. Retorna 409 em transição inválida.
 - 422 para dados inválidos, 404 para UUID inexistente.
 
+
+## Sprint 06 — parâmetros de listagem
+- `search` (opcional, até 120 caracteres): pesquisa parcial no título, sem diferenciar maiúsculas/minúsculas.
+- `status` (opcional): `open`, `in_progress`, `resolved`.
+- `priority` (opcional): `low`, `medium`, `high`.
+- Filtros são combinados por AND e aplicados antes de `limit`/`offset`.
+- Exemplo: `GET /api/v1/tickets?search=relatório&status=open&priority=high&limit=11&offset=0`.
+- Filtros inválidos retornam 422. Nenhuma migration adicional.

@@ -83,3 +83,6 @@ Abra http://localhost:5173. Configure `frontend/.env` a partir de `.env.example`
 ## Sprint 05 — Qualidade
 
 Testes de regressão da API, paginação confiável, recuperação de erros na listagem e tipagem de ambiente do Vite. Consulte [docs/sprint-05.md](docs/sprint-05.md).
+
+## Sprint 06 — pesquisa e filtros
+A listagem de chamados permite pesquisar por título e filtrar por status e prioridade, com filtros aplicados pelo backend antes da paginação. Consulte `docs/sprint-06.md`.
