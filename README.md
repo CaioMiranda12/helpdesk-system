@@ -52,3 +52,7 @@ Acesse `http://localhost:5173/login`. API e Swagger em `http://127.0.0.1:8000/do
 ### Sprint 10 — Atribuição de responsáveis
 
 Execute `alembic upgrade head` no backend para adicionar `assignee_id` sem apagar chamados existentes. Atribuições são feitas por administradores na página de detalhes; agentes apenas visualizam. Veja [docs/sprint-10.md](docs/sprint-10.md).
+
+### Sprint 11 — Comentários e histórico
+
+Execute `alembic upgrade head` no backend (migration `0004_create_ticket_activities`). A página de detalhes agora mostra comentários e eventos de status/atribuição. Consulte `docs/sprint-11.md`.

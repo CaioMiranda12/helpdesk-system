@@ -62,3 +62,9 @@ Retorna uma lista de usuários (`id`, `email`, `name`, `role`) sem hashes de sen
 Para remover a atribuição: `{"assignee_id": null}`. O retorno é o chamado atualizado com `assignee_id` e `assignee`.
 
 Erros: 401 sem login; 403 sem permissão; 404 chamado/agente inexistente; 409 usuário administrador como responsável; 422 payload inválido.
+
+## Sprint 11 — Comentários e atividades
+
+- `GET /api/v1/tickets/{ticket_id}/activities?limit=50&offset=0` — lista atividades (JWT obrigatório; 404 se chamado não existir; 422 se paginação inválida).
+- `POST /api/v1/tickets/{ticket_id}/comments` — `{ "body": "Investigando o chamado." }` (JWT obrigatório; 201; 422 para comentário vazio ou com mais de 2000 caracteres).
+- Mudanças válidas de status e de responsável passam a gerar atividades automaticamente, com o usuário que realizou a ação.
