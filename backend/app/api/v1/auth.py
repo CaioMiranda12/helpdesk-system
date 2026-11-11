@@ -32,3 +32,17 @@ def create_user(payload: UserCreate, db: Session = Depends(get_db), _admin: User
     db.commit()
     db.refresh(user)
     return user
+
+
+@router.get("/users", response_model=list[UserRead])
+def list_users(
+    limit: int = 50,
+    offset: int = 0,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin),
+):
+    from fastapi import Query
+    # Validamos explicitamente para manter a paginação previsível.
+    if not 1 <= limit <= 100 or offset < 0:
+        raise HTTPException(status_code=422, detail="Paginação inválida")
+    return db.scalars(select(User).order_by(User.created_at.desc(), User.id).limit(limit).offset(offset)).all()
