@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import CheckConstraint, DateTime, String, Text, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, Text, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Uuid
 from app.db.base import Base
 
@@ -20,5 +20,7 @@ class Ticket(Base):
     description: Mapped[str] = mapped_column(Text, nullable=False)
     priority: Mapped[str] = mapped_column(String(10), nullable=False, server_default="medium")
     status: Mapped[str] = mapped_column(String(20), nullable=False, server_default="open")
+    assignee_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    assignee = relationship("User", foreign_keys=[assignee_id])
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
