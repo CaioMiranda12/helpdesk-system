@@ -56,3 +56,7 @@ Execute `alembic upgrade head` no backend para adicionar `assignee_id` sem apaga
 ### Sprint 11 — Comentários e histórico
 
 Execute `alembic upgrade head` no backend (migration `0004_create_ticket_activities`). A página de detalhes agora mostra comentários e eventos de status/atribuição. Consulte `docs/sprint-11.md`.
+
+## Sprint 12 — Histórico paginado
+
+A tela de detalhes agora carrega 10 atividades por vez e permite buscar eventos anteriores. O backend ganhou índice de consulta para o histórico. Veja [docs/sprint-12.md](docs/sprint-12.md).

@@ -68,3 +68,7 @@ Erros: 401 sem login; 403 sem permissão; 404 chamado/agente inexistente; 409 us
 - `GET /api/v1/tickets/{ticket_id}/activities?limit=50&offset=0` — lista atividades (JWT obrigatório; 404 se chamado não existir; 422 se paginação inválida).
 - `POST /api/v1/tickets/{ticket_id}/comments` — `{ "body": "Investigando o chamado." }` (JWT obrigatório; 201; 422 para comentário vazio ou com mais de 2000 caracteres).
 - Mudanças válidas de status e de responsável passam a gerar atividades automaticamente, com o usuário que realizou a ação.
+
+## Sprint 12 — Paginação do histórico
+
+`GET /api/v1/tickets/{ticket_id}/activities?limit=11&offset=0`: retorna lista da atividade mais recente para a mais antiga. A interface usa 10 registros por página e solicita um 11º para saber se há mais. `limit` entre 1 e 100; `offset` >= 0. Autenticação obrigatória.
