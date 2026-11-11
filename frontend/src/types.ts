@@ -7,6 +7,8 @@ export interface Ticket {
   description: string;
   priority: Priority;
   status: TicketStatus;
+  assignee_id: string | null;
+  assignee: { id: string; name: string; email: string } | null;
   created_at: string;
   updated_at: string;
 }

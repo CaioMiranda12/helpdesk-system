@@ -46,6 +46,10 @@ export const ticketsApi = {
     const { data } = await http.patch<Ticket>(`/api/v1/tickets/${id}`, payload);
     return data;
   },
+  async assign(id: string, assigneeId: string | null): Promise<Ticket> {
+    const { data } = await http.patch<Ticket>(`/api/v1/tickets/${id}/assignee`, { assignee_id: assigneeId });
+    return data;
+  },
   async changeStatus(id: string, status: TicketStatus): Promise<Ticket> {
     const { data } = await http.patch<Ticket>(`/api/v1/tickets/${id}/status`, { status });
     return data;
@@ -59,11 +63,19 @@ export function errorMessage(error: unknown): string {
     if (error.response.status >= 500) return 'O servidor encontrou um problema. Tente novamente mais tarde.';
     if (error.response.status === 403) return 'Você não tem permissão para esta operação.';
     if (error.response.status === 404) return 'Chamado não encontrado.';
-    if (error.response.status === 409) return 'Esta mudança de status não é permitida.';
+    if (error.response.status === 409) return 'Operação não permitida. Confira o status ou o responsável selecionado.';
     if (error.response.status === 422) return 'Dados inválidos. Revise os campos preenchidos.';
   }
   return 'Ocorreu um erro inesperado. Tente novamente.';
 }
+
+export interface Agent { id: string; name: string; email: string; role: "agent" }
+export const agentsApi = {
+  async list(): Promise<Agent[]> {
+    const { data } = await http.get<Agent[]>("/api/v1/agents");
+    return data;
+  },
+};
 
 export const dashboardApi = {
   async summary(): Promise<DashboardSummary> {
