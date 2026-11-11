@@ -64,3 +64,18 @@ Leia [docs/sprint-02.md](docs/sprint-02.md) para configurar PostgreSQL, validar 
 
 ## Sprint 03
 API de chamados implementada. Consulte `docs/sprint-03.md` para endpoints, testes e commits.
+
+## Sprint 04 — Interface React
+
+Frontend integrado à API, com listagem, cadastro, detalhes, edição e transições de status. Leia [docs/sprint-04.md](docs/sprint-04.md) para instalar, testar e commitar usando a branch `master`.
+
+```bash
+# Terminal 1 — dentro de backend
+python -m uvicorn app.main:app --reload
+
+# Terminal 2 — dentro de frontend
+npm install
+npm run dev
+```
+
+Abra http://localhost:5173. Configure `frontend/.env` a partir de `.env.example` somente se necessário.
