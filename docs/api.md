@@ -16,3 +16,17 @@
 - Filtros são combinados por AND e aplicados antes de `limit`/`offset`.
 - Exemplo: `GET /api/v1/tickets?search=relatório&status=open&priority=high&limit=11&offset=0`.
 - Filtros inválidos retornam 422. Nenhuma migration adicional.
+
+## Dashboard — Sprint 07
+
+`GET /api/v1/dashboard/summary` retorna contagens agregadas de **todos** os chamados (independentemente da paginação e dos filtros da listagem):
+
+```json
+{
+  "total": 4,
+  "by_status": {"open": 2, "in_progress": 1, "resolved": 1},
+  "by_priority": {"low": 1, "medium": 1, "high": 2}
+}
+```
+
+Todos os campos são numéricos e os grupos incluem chaves com valor zero. Não há parâmetros.

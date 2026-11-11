@@ -86,3 +86,7 @@ Testes de regressão da API, paginação confiável, recuperação de erros na l
 
 ## Sprint 06 — pesquisa e filtros
 A listagem de chamados permite pesquisar por título e filtrar por status e prioridade, com filtros aplicados pelo backend antes da paginação. Consulte `docs/sprint-06.md`.
+
+## Sprint 07 — Dashboard
+
+Indicadores agregados por status e prioridade em `/dashboard`, alimentados por `GET /api/v1/dashboard/summary`. Veja [docs/sprint-07.md](docs/sprint-07.md).
