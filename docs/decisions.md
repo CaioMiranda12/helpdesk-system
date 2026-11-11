@@ -75,3 +75,12 @@ Motivo:
 Consequências e riscos:
 Quando revisar:
 ```
+
+## ADR-05 — SQLAlchemy 2.x com sessões síncronas
+**Decisão:** utilizar SQLAlchemy 2.x e psycopg 3 síncronos. **Motivo:** menor carga conceitual para aprender persistência. **Trade-off:** não usar recursos async nesta fase.
+
+## ADR-06 — Restrições no banco e migration explícita
+**Decisão:** valores de status/prioridade e comprimentos de texto validados também por `CHECK`; primeira migration escrita e revisada. **Motivo:** preservar integridade mesmo fora da API. **Trade-off:** mudanças nas regras exigem migrations futuras.
+
+## ADR-07 — `updated_at` controlado pela aplicação
+**Decisão:** atualizar o timestamp somente em mudanças reais durante a Sprint 03. **Motivo:** evitar alteração em chamadas sem mudanças. **Trade-off:** requer disciplina nos serviços.

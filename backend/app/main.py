@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 
 app = FastAPI(
@@ -8,6 +7,6 @@ app = FastAPI(
 )
 
 
-@app.get("/health")
-def health_check():
+@app.get("/health", tags=["Health"])
+def health_check() -> dict[str, str]:
     return {"status": "ok"}

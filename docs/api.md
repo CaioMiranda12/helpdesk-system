@@ -63,3 +63,6 @@ Ordenação padrão: `created_at DESC`, com `id` como desempate. Formato da resp
 - `500`: erro inesperado, sem expor detalhes internos.
 
 O formato final do corpo de erro será definido junto aos schemas, mantendo mensagens úteis ao frontend. O Swagger do FastAPI será a referência para os endpoints efetivamente implementados.
+
+## Estado da implementação na Sprint 02
+A API de chamados continua **planejada, não implementada**. Nesta sprint foram adicionados apenas persistência, modelo e migration; `GET /health` permanece disponível.

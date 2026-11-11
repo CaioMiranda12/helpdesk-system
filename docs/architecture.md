@@ -65,3 +65,11 @@ Sem autenticação, qualquer pessoa com acesso à API poderá consultar e modifi
 ## Evolução possível
 
 Autenticação JWT, perfis, comentários, histórico, atribuição, Docker Compose, CI, observabilidade e processamento assíncrono. Cada nova stack deve ter requisito e custo documentados.
+
+## Sprint 02 — Persistência
+- `app/core/config.py`: configurações por ambiente via `pydantic-settings`.
+- `app/db/session.py`: engine e sessões síncronas SQLAlchemy.
+- `app/db/base.py`: base declarativa dos modelos.
+- `app/models/ticket.py`: tabela `tickets` e restrições de integridade.
+- `alembic/`: migrações versionadas.
+- Sem endpoints de chamados até a Sprint 03.

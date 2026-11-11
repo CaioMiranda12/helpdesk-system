@@ -58,3 +58,6 @@ python -m pytest -q
 ## Observação de segurança
 
 O MVP inicial não terá autenticação. Use apenas dados fictícios e não publique uma instância com dados reais ou acesso irrestrito de escrita.
+
+## Sprint 02 — Banco de dados
+Leia [docs/sprint-02.md](docs/sprint-02.md) para configurar PostgreSQL, validar a conexão e aplicar a migration. A API de chamados será implementada na Sprint 03.
