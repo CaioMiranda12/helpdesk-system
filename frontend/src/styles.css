@@ -37,3 +37,12 @@
 .login-card input{padding:12px;border:1px solid #dbe2ec;border-radius:9px}
 .login-card button{margin-top:14px}
 @media(max-width:850px){.topbar-inner{flex-wrap:wrap}.account{width:100%;justify-content:flex-end}}
+
+/* Sprint 09 — administração de usuários */
+.users-grid{display:grid;grid-template-columns:minmax(280px,380px) minmax(0,1fr);gap:20px;align-items:start}
+.users-form{padding:24px;max-width:none}
+.users-form h2,.users-table-heading h2{font-size:17px;margin:0}
+.users-table-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px}
+.users-note{padding:0 22px 18px}.users-table .alert{margin:12px 20px}
+.alert.success{color:#256b4a;background:#e7f7ee}
+@media(max-width:950px){.users-grid{grid-template-columns:1fr}}

@@ -6,7 +6,12 @@ import { TicketList } from './pages/TicketList';
 import { TicketNew } from './pages/TicketNew';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
+import { Users } from './pages/Users';
 
+function AdminOnly() {
+  const { user } = useAuth();
+  return user?.role === 'admin' ? <Outlet /> : <Navigate to="/" replace />;
+}
 function Protected() {
   const { user, loading } = useAuth();
   const location = useLocation();
@@ -20,6 +25,7 @@ export default function App() {
     <Route element={<Protected />}><Route element={<Layout />}>
       <Route path="/" element={<TicketList />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route element={<AdminOnly />}><Route path="/users" element={<Users />} /></Route>
       <Route path="/tickets/new" element={<TicketNew />} />
       <Route path="/tickets/:id" element={<TicketDetail />} />
       <Route path="*" element={<div className="card state-message"><h1>Página não encontrada</h1></div>} />
