@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Priority, Ticket, TicketCreate, TicketStatus, TicketUpdate } from '../types';
+import type { Priority, Ticket, TicketCreate, TicketStatus, TicketUpdate, DashboardSummary } from '../types';
 
 const http = axios.create({
   baseURL: (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, ''),
@@ -48,3 +48,10 @@ export function errorMessage(error: unknown): string {
   }
   return 'Ocorreu um erro inesperado. Tente novamente.';
 }
+
+export const dashboardApi = {
+  async summary(): Promise<DashboardSummary> {
+    const { data } = await http.get<DashboardSummary>('/api/v1/dashboard/summary');
+    return data;
+  },
+};

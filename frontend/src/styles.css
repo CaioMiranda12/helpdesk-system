@@ -9,3 +9,20 @@
 .filters-grid .button{min-height:41px}
 @media(max-width:850px){.filters-grid{grid-template-columns:1fr 1fr}.filters-grid .filter-field:first-child{grid-column:1/-1}}
 @media(max-width:480px){.filters-grid{grid-template-columns:1fr}.filters-grid .filter-field:first-child{grid-column:auto}}
+
+/* Sprint 07 — dashboard responsivo */
+.dashboard-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.dashboard-total,.dashboard-stat{padding:23px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.dashboard-total>span,.dashboard-stat>span:first-child{color:#6b7890;font-size:13px;font-weight:600}
+.dashboard-total strong,.dashboard-stat strong{font-size:38px;letter-spacing:-1.4px;color:#182b4a}
+.dashboard-total a{font-size:12px;color:#2855c6;font-weight:700}
+.dashboard-breakdown{padding:24px 28px}
+.dashboard-breakdown h2{font-size:17px;margin:0 0 24px}
+.priority-row{margin:0 0 22px}
+.priority-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.priority-label strong{font-size:14px}
+.priority-track{height:12px;background:#edf1f7;border-radius:999px;overflow:hidden}
+.priority-fill{height:100%;border-radius:999px}
+.priority-fill.low{background:#34a879}.priority-fill.medium{background:#e4ad41}.priority-fill.high{background:#d76c6c}
+@media(max-width:900px){.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.dashboard-metrics{grid-template-columns:1fr}.dashboard-breakdown{padding:20px}}

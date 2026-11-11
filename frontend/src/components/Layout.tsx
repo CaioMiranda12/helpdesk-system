@@ -8,6 +8,7 @@ export function Layout() {
           <Link to="/" className="brand"><span className="brand-mark">H</span> Helpdesk <span className="brand-sub">/ Central de suporte</span></Link>
           <nav aria-label="Navegação principal">
             <NavLink to="/" end>Chamados</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/tickets/new">Novo chamado</NavLink>
           </nav>
         </div>

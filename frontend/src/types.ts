@@ -30,3 +30,9 @@ export const nextStatuses: Record<TicketStatus, TicketStatus[]> = {
   in_progress: ['resolved'],
   resolved: ['in_progress'],
 };
+
+export interface DashboardSummary {
+  total: number;
+  by_status: Record<TicketStatus, number>;
+  by_priority: Record<Priority, number>;
+}
