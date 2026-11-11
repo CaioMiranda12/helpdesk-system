@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import axios from 'axios';
 import type { Ticket, TicketCreate, TicketStatus, TicketUpdate } from '../types';
 
@@ -32,7 +31,9 @@ export const ticketsApi = {
 
 export function errorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
+    if (error.code === 'ECONNABORTED') return 'A API demorou para responder. Tente novamente.';
     if (!error.response) return 'Não foi possível conectar à API. Verifique se o FastAPI está rodando.';
+    if (error.response.status >= 500) return 'O servidor encontrou um problema. Tente novamente mais tarde.';
     if (error.response.status === 404) return 'Chamado não encontrado.';
     if (error.response.status === 409) return 'Esta mudança de status não é permitida.';
     if (error.response.status === 422) return 'Dados inválidos. Revise os campos preenchidos.';
