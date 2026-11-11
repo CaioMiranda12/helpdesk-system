@@ -26,3 +26,14 @@
 .priority-fill.low{background:#34a879}.priority-fill.medium{background:#e4ad41}.priority-fill.high{background:#d76c6c}
 @media(max-width:900px){.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.dashboard-metrics{grid-template-columns:1fr}.dashboard-breakdown{padding:20px}}
+
+/* Sprint 08 — autenticação */
+.account{display:flex;align-items:center;gap:12px;font-size:12px;color:#66748b}
+.account .button{padding:8px 12px}
+.login-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:#f5f7fb}
+.login-card{width:min(100%,430px);padding:36px;display:flex;flex-direction:column;gap:12px}
+.login-card h1{font-size:25px;margin:20px 0 0}
+.login-card label{font-size:13px;font-weight:700;margin-top:10px}
+.login-card input{padding:12px;border:1px solid #dbe2ec;border-radius:9px}
+.login-card button{margin-top:14px}
+@media(max-width:850px){.topbar-inner{flex-wrap:wrap}.account{width:100%;justify-content:flex-end}}

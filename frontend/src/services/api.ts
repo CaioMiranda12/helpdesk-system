@@ -1,9 +1,24 @@
+import { getToken, clearToken } from './auth';
 import axios from 'axios';
 import type { Priority, Ticket, TicketCreate, TicketStatus, TicketUpdate, DashboardSummary } from '../types';
 
 const http = axios.create({
   baseURL: (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, ''),
   timeout: 10000,
+});
+
+http.interceptors.request.use(config => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+http.interceptors.response.use(response => response, error => {
+  if (axios.isAxiosError(error) && error.response?.status === 401 && getToken()) {
+    clearToken();
+    // A página será redirecionada ao login e o contexto será reiniciado.
+    window.location.assign('/login');
+  }
+  return Promise.reject(error);
 });
 
 export interface TicketFilters {
@@ -42,6 +57,7 @@ export function errorMessage(error: unknown): string {
     if (error.code === 'ECONNABORTED') return 'A API demorou para responder. Tente novamente.';
     if (!error.response) return 'Não foi possível conectar à API. Verifique se o FastAPI está rodando.';
     if (error.response.status >= 500) return 'O servidor encontrou um problema. Tente novamente mais tarde.';
+    if (error.response.status === 403) return 'Você não tem permissão para esta operação.';
     if (error.response.status === 404) return 'Chamado não encontrado.';
     if (error.response.status === 409) return 'Esta mudança de status não é permitida.';
     if (error.response.status === 422) return 'Dados inválidos. Revise os campos preenchidos.';
