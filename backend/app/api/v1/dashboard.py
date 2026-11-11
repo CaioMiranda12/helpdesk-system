@@ -5,7 +5,9 @@ from app.db.session import get_db
 from app.schemas.dashboard import DashboardSummary
 from app.services.dashboard import get_summary
 
-router = APIRouter(prefix="/api/v1/dashboard", tags=["Dashboard"])
+from app.core.security import get_current_user
+
+router = APIRouter(dependencies=[Depends(get_current_user)], prefix="/api/v1/dashboard", tags=["Dashboard"])
 
 
 @router.get("/summary", response_model=DashboardSummary)

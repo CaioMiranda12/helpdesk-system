@@ -5,7 +5,9 @@ from app.db.session import get_db
 from app.schemas.ticket import TicketCreate, TicketRead, TicketUpdate, TicketStatusUpdate, Status, Priority
 from app.services import tickets as service
 
-router = APIRouter(prefix="/api/v1/tickets", tags=["Tickets"])
+from app.core.security import get_current_user
+
+router = APIRouter(dependencies=[Depends(get_current_user)], prefix="/api/v1/tickets", tags=["Tickets"])
 
 @router.post("", response_model=TicketRead, status_code=status.HTTP_201_CREATED)
 def create_ticket(payload: TicketCreate, db: Session = Depends(get_db)):
