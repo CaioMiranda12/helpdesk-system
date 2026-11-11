@@ -47,3 +47,8 @@ Acesse `http://localhost:5173/login`. API e Swagger em `http://127.0.0.1:8000/do
 - [Histórico de decisões](docs/decisions.md)
 
 **Atenção:** autenticação educacional/MVP; não pronta para produção. Consulte os limites de segurança em `docs/sprint-08.md`.
+
+
+### Sprint 10 — Atribuição de responsáveis
+
+Execute `alembic upgrade head` no backend para adicionar `assignee_id` sem apagar chamados existentes. Atribuições são feitas por administradores na página de detalhes; agentes apenas visualizam. Veja [docs/sprint-10.md](docs/sprint-10.md).

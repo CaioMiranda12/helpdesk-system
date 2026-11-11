@@ -47,3 +47,18 @@ Retorna uma lista de usuários (`id`, `email`, `name`, `role`) sem hashes de sen
 `limit` aceita 1–100; `offset` deve ser não negativo. Erros: 401 sem autenticação, 403 agente, 422 paginação inválida.
 
 `POST /api/v1/users` continua exclusivo de administradores, com corpo `{ "name": "...", "email": "...", "password": "...", "role": "agent" }`.
+
+
+## Sprint 10 — Responsáveis por chamados
+
+`GET /api/v1/agents`: requer login, retorna apenas agentes (id, nome, e-mail, perfil).
+
+`PATCH /api/v1/tickets/{ticket_id}/assignee`: requer administrador. Exemplo:
+
+```json
+{"assignee_id": "UUID-DO-AGENTE"}
+```
+
+Para remover a atribuição: `{"assignee_id": null}`. O retorno é o chamado atualizado com `assignee_id` e `assignee`.
+
+Erros: 401 sem login; 403 sem permissão; 404 chamado/agente inexistente; 409 usuário administrador como responsável; 422 payload inválido.
