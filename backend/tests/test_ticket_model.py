@@ -4,7 +4,7 @@ from app.models.ticket import Ticket
 
 
 def test_ticket_model_has_expected_columns():
-    assert set(Ticket.__table__.columns.keys()) == {"id", "title", "description", "priority", "status", "created_at", "updated_at"}
+    assert set(Ticket.__table__.columns.keys()) == {"id", "title", "description", "priority", "status", "assignee_id", "created_at", "updated_at"}
     assert Ticket.__table__.primary_key.columns.keys() == ["id"]
 
 
