@@ -35,8 +35,8 @@ def update_ticket(ticket_id: UUID, payload: TicketUpdate, db: Session = Depends(
     return service.update_ticket(db, ticket_id, payload)
 
 @router.patch("/{ticket_id}/status", response_model=TicketRead)
-def update_status(ticket_id: UUID, payload: TicketStatusUpdate, db: Session = Depends(get_db)):
-    return service.change_ticket_status(db, ticket_id, payload.status)
+def update_status(ticket_id: UUID, payload: TicketStatusUpdate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    return service.change_ticket_status(db, ticket_id, payload.status, user.id)
 
 @router.patch("/{ticket_id}/assignee", response_model=TicketRead)
 def update_assignee(
@@ -45,4 +45,4 @@ def update_assignee(
     db: Session = Depends(get_db),
     _admin: User = Depends(require_admin),
 ):
-    return service.assign_ticket(db, ticket_id, payload.assignee_id)
+    return service.assign_ticket(db, ticket_id, payload.assignee_id, _admin.id)
