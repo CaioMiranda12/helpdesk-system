@@ -64,3 +64,8 @@ A tela de detalhes agora carrega 10 atividades por vez e permite buscar eventos 
 ## Sprint 13 — Testes de frontend e apresentação
 
 O frontend agora inclui testes de componentes com **Vitest + React Testing Library**. Em `frontend/`, execute `npm install`, `npm run typecheck`, `npm test` e `npm run build`. Veja [guia da Sprint 13](docs/sprint-13.md) e [roteiro de portfólio](docs/portfolio.md). Os testes não substituem uma validação ponta a ponta com FastAPI e PostgreSQL.
+
+
+## Sprint 14 — Preparação para deploy
+
+Consulte [docs/sprint-14.md](docs/sprint-14.md) e [docs/security-checklist.md](docs/security-checklist.md). Ambiente Docker Compose destinado a demonstração local, não produção.
