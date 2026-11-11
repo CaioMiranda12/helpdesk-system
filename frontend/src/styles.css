@@ -61,3 +61,6 @@
 .activity-item { border-top: 1px solid #e2e8f0; padding: 1rem 0; }
 .activity-item p { margin: .4rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .activity-item small { margin-left: .5rem; }
+
+/* Sprint 12 — paginação do histórico */
+.activity-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid #e2e8f0}

@@ -11,6 +11,7 @@ export interface TicketActivity {
   author: { id: string; name: string };
   created_at: string;
 }
+export const ACTIVITY_PAGE_SIZE = 10;
 const http = axios.create({ baseURL: (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, ''), timeout: 10000 });
 http.interceptors.request.use(config => {
   const token = getToken();
@@ -18,8 +19,8 @@ http.interceptors.request.use(config => {
   return config;
 });
 export const activitiesApi = {
-  async list(ticketId: string): Promise<TicketActivity[]> {
-    const { data } = await http.get<TicketActivity[]>(`/api/v1/tickets/${ticketId}/activities`, { params: { limit: 100 } });
+  async list(ticketId: string, offset = 0, limit = ACTIVITY_PAGE_SIZE + 1): Promise<TicketActivity[]> {
+    const { data } = await http.get<TicketActivity[]>(`/api/v1/tickets/${ticketId}/activities`, { params: { limit, offset } });
     return data;
   },
   async comment(ticketId: string, body: string): Promise<TicketActivity> {
