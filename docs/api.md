@@ -38,3 +38,12 @@ Todos os campos são numéricos e os grupos incluem chaves com valor zero. Não 
 - `GET /api/v1/auth/me` — exige `Authorization: Bearer <token>`; retorna usuário atual.
 - `POST /api/v1/users` — exige token de administrador; cria conta `{ "email", "name", "password", "role" }`. Retorna 201; 403 para agentes; 409 para e-mail duplicado; 422 para dados inválidos.
 - Todos os endpoints de tickets e dashboard exigem Bearer token (401 sem token).
+
+
+## Sprint 09 — Administração de usuários
+
+`GET /api/v1/users?limit=50&offset=0` exige token JWT de administrador.
+Retorna uma lista de usuários (`id`, `email`, `name`, `role`) sem hashes de senha.
+`limit` aceita 1–100; `offset` deve ser não negativo. Erros: 401 sem autenticação, 403 agente, 422 paginação inválida.
+
+`POST /api/v1/users` continua exclusivo de administradores, com corpo `{ "name": "...", "email": "...", "password": "...", "role": "agent" }`.

@@ -2,12 +2,12 @@
 
 Projeto de portfólio full-stack: **FastAPI + SQLAlchemy + PostgreSQL + React + TypeScript + Vite**.
 
-## Funcionalidades (Sprint 08)
+## Funcionalidades (Sprint 09)
 - CRUD parcial de chamados (criação, listagem, consulta, edição e mudança de status).
 - Pesquisa, filtros por status/prioridade e paginação.
 - Dashboard com totais por status e prioridade.
 - Login JWT e dois papéis: `admin` e `agent`.
-- Criação de usuários exclusivamente por administradores; sem cadastro público.
+- Criação e listagem de usuários exclusivamente por administradores, agora também pela interface React; sem cadastro público.
 - Testes Pytest e migrations Alembic.
 
 ## Como executar
@@ -40,7 +40,8 @@ npm run dev
 Acesse `http://localhost:5173/login`. API e Swagger em `http://127.0.0.1:8000/docs`.
 
 ## Documentação
-- [Sprint 08 — Autenticação](docs/sprint-08.md)
+- [Sprint 09 — Gestão de usuários](docs/sprint-09.md)
+- [Sprint 09 — Autenticação](docs/sprint-08.md)
 - [Contrato da API](docs/api.md)
 - [Arquitetura](docs/architecture.md)
 - [Histórico de decisões](docs/decisions.md)
