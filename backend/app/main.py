@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.tickets import router as tickets_router
+from app.api.v1.dashboard import router as dashboard_router
 
 app = FastAPI(
     title="Helpdesk API",
     description="API do Sistema de Gestão de Chamados",
-    version="0.5.0",
+    version="0.7.0",
 )
 
 # O navegador só pode acessar a API a partir das origens de desenvolvimento listadas.
@@ -23,3 +24,4 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 app.include_router(tickets_router)
+app.include_router(dashboard_router)
