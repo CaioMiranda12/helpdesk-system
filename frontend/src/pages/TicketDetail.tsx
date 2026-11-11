@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TicketForm } from '../components/TicketForm';
+import { TicketActivityPanel } from '../components/TicketActivityPanel';
 import { agentsApi, errorMessage, ticketsApi } from '../services/api';
 import type { Agent } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -14,6 +15,7 @@ export function TicketDetail() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [agentsError, setAgentsError] = useState("");
   const [savingAssignee, setSavingAssignee] = useState(false);
+  const [activityRefresh, setActivityRefresh] = useState(0);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,7 +40,7 @@ export function TicketDetail() {
   async function changeAssignee(value: string) {
     if (!ticket) return;
     setSavingAssignee(true); setError('');
-    try { setTicket(await ticketsApi.assign(ticket.id, value || null)); }
+    try { setTicket(await ticketsApi.assign(ticket.id, value || null)); setActivityRefresh(n => n + 1); }
     catch (err) { setError(errorMessage(err)); }
     finally { setSavingAssignee(false); }
   }
@@ -46,7 +48,7 @@ export function TicketDetail() {
   async function changeStatus(status: TicketStatus) {
     if (!ticket) return;
     setChanging(true); setError('');
-    try { setTicket(await ticketsApi.changeStatus(ticket.id, status)); }
+    try { setTicket(await ticketsApi.changeStatus(ticket.id, status)); setActivityRefresh(n => n + 1); }
     catch (err) { setError(errorMessage(err)); }
     finally { setChanging(false); }
   }
@@ -69,5 +71,6 @@ export function TicketDetail() {
         {agentsError && <p className="alert error" role="alert">{agentsError}</p>}
       </div>}
       <div className="detail-row"><span>Atualizado</span><strong>{new Date(ticket.updated_at).toLocaleString('pt-BR')}</strong></div><div className="status-actions"><h3>Próxima etapa</h3>{nextStatuses[ticket.status].map(status => <button key={status} className="button primary" disabled={changing} onClick={() => changeStatus(status)}>{changing ? 'Atualizando...' : `Mover para: ${statusLabels[status]}`}</button>)}</div></aside></div>}
+    <TicketActivityPanel ticketId={ticket.id} refreshKey={activityRefresh} />
   </>;
 }
