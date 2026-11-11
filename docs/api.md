@@ -30,3 +30,11 @@
 ```
 
 Todos os campos são numéricos e os grupos incluem chaves com valor zero. Não há parâmetros.
+
+
+## Sprint 08 — Autenticação
+
+- `POST /api/v1/auth/login` — público; `{ "email": "...", "password": "..." }`; retorna `access_token`, `token_type` e `user`. Erro 401 para credenciais inválidas.
+- `GET /api/v1/auth/me` — exige `Authorization: Bearer <token>`; retorna usuário atual.
+- `POST /api/v1/users` — exige token de administrador; cria conta `{ "email", "name", "password", "role" }`. Retorna 201; 403 para agentes; 409 para e-mail duplicado; 422 para dados inválidos.
+- Todos os endpoints de tickets e dashboard exigem Bearer token (401 sem token).
