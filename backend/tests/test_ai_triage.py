@@ -1,3 +1,4 @@
+from unittest.mock import patch
 from fastapi.testclient import TestClient
 from app.core.security import get_current_user
 from app.main import app
@@ -31,16 +32,32 @@ def test_triage_requires_authentication():
 
 def test_triage_endpoint_authenticated_without_database():
     app.dependency_overrides[get_current_user] = lambda: object()
+
     try:
-        with TestClient(app) as client:
-            response = client.post("/api/v1/ai/triage", json={
-                "title": "Sistema fora do ar", "description": "Todos os usuários foram afetados.",
-            })
-            invalid = client.post("/api/v1/ai/triage", json={
-                "title": "    ", "description": "curto",
-            })
+        with patch(
+            "app.api.v1.ai.run_triage",
+            side_effect=suggest_triage,
+        ):
+            with TestClient(app) as client:
+                response = client.post(
+                    "/api/v1/ai/triage",
+                    json={
+                        "title": "Sistema fora do ar",
+                        "description": "Todos os usuários foram afetados.",
+                    },
+                )
+
+                invalid = client.post(
+                    "/api/v1/ai/triage",
+                    json={
+                        "title": "    ",
+                        "description": "curto",
+                    },
+                )
+
         assert response.status_code == 200, response.text
         assert response.json()["priority"] == "high"
         assert invalid.status_code == 422
+
     finally:
         app.dependency_overrides.pop(get_current_user, None)
