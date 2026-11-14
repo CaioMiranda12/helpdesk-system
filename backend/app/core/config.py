@@ -8,6 +8,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     app_environment: str = "development"
+    ai_provider: str = "mock"
+    openai_api_key: str = ""
+    openai_model: str = "gpt-4.1-mini"
+    groq_api_key: str = ""
+    groq_model: str = "openai/gpt-oss-20b"
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
