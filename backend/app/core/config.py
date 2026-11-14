@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     ai_provider: str = "mock"
     openai_api_key: str = ""
     openai_model: str = "gpt-4.1-mini"
+    groq_api_key: str = ""
+    groq_model: str = "openai/gpt-oss-20b"
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
