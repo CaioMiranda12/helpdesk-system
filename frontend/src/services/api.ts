@@ -83,3 +83,21 @@ export const dashboardApi = {
     return data;
   },
 };
+
+/** Triagem simulada da Sprint 16. Sugestões não são persistidas automaticamente. */
+export interface AITriageSuggestion {
+  priority: Priority;
+  category: 'access' | 'infrastructure' | 'software' | 'hardware' | 'general';
+  reason: string;
+  provider: string;
+}
+
+export const aiTriageApi = {
+  async suggest(title: string, description: string): Promise<AITriageSuggestion> {
+    const { data } = await http.post<AITriageSuggestion>('/api/v1/ai/triage', {
+      title: title.trim(),
+      description: description.trim(),
+    });
+    return data;
+  },
+};
