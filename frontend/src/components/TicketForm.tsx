@@ -77,7 +77,7 @@ export function TicketForm({ initial, submitLabel, onSubmit }: Props) {
       </select>
       <div className="form-actions">
         <button className="button" type="button" onClick={handleTriage} disabled={saving || triaging}>
-          {triaging ? 'Analisando...' : 'Sugerir com IA (simulação)'}
+          {triaging ? 'Analisando...' : 'Sugerir triagem'}
         </button>
       </div>
       {triageError && <p role="alert" className="alert error">{triageError}</p>}
@@ -86,7 +86,7 @@ export function TicketForm({ initial, submitLabel, onSubmit }: Props) {
           <p><strong>Prioridade sugerida:</strong> {priorityLabels[suggestion.priority]}</p>
           <p><strong>Categoria sugerida:</strong> {{ access: 'Acesso', infrastructure: 'Infraestrutura', software: 'Software', hardware: 'Hardware', general: 'Geral' }[suggestion.category]}</p>
           <p><strong>Motivo:</strong> {suggestion.reason}</p>
-          <p className="hint">Triagem simulada por regras. A categoria é informativa e não é salva no chamado.</p>
+          <p className="hint">Sugestão automática: pode ser gerada por regras ou por IA, conforme a configuração do servidor. Revise antes de aplicar. A categoria não é salva no chamado.</p>
           <button className="button" type="button" onClick={applySuggestion} disabled={saving}>Aplicar prioridade sugerida</button>
         </section>
       )}
