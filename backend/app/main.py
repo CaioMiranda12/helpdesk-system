@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import get_settings
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.v1.ai import router as ai_router
 from app.api.v1.tickets import router as tickets_router
 from app.api.v1.dashboard import router as dashboard_router
 from app.api.v1.auth import router as auth_router
@@ -26,6 +27,7 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 app.include_router(auth_router)
+app.include_router(ai_router)
 app.include_router(agents_router)
 app.include_router(tickets_router)
 app.include_router(activities_router)
