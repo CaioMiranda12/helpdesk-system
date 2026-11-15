@@ -12,6 +12,7 @@ from app.core.config import get_settings
 from app.models.activity import TicketActivity
 from app.schemas.ai_activity_summary import AIActivitySummaryResponse
 from app.services.tickets import get_ticket_or_404
+from app.services.ai_privacy import minimize_for_external_ai
 
 _SYSTEM_PROMPT = (
     "Resuma em português do Brasil somente os eventos fornecidos, de modo objetivo. "
@@ -35,7 +36,7 @@ def _events(db: Session, ticket_id: UUID) -> list[dict[str, str]]:
     for item in reversed(records):
         event = {"kind": item.kind}
         if item.kind == "comment":
-            event["body"] = (item.body or "")[:1000]
+            event["body"] = minimize_for_external_ai((item.body or "")[:1000])
         elif item.kind == "status":
             event["from"] = item.old_value or ""
             event["to"] = item.new_value or ""
@@ -81,9 +82,16 @@ def summarize_activities(db: Session, ticket_id: UUID) -> AIActivitySummaryRespo
     if not key:
         raise HTTPException(status_code=503, detail="Provedor de IA não configurado")
 
+    # Defesa em profundidade: higieniza também eventos vindos de outras fontes.
+    # Não modifica os registros persistidos nem os dados exibidos no Helpdesk.
+    safe_events = [
+        {key: minimize_for_external_ai(value) if isinstance(value, str) else value
+         for key, value in event.items()}
+        for event in events
+    ]
     messages = [
         {"role": "system", "content": _SYSTEM_PROMPT},
-        {"role": "user", "content": json.dumps({"activities": events}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"activities": safe_events}, ensure_ascii=False)},
     ]
     try:
         if provider == "groq":

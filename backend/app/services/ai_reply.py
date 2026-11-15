@@ -7,6 +7,7 @@ from groq import Groq
 
 from app.core.config import get_settings
 from app.schemas.ai_reply import AIReplyRequest, AIReplyResponse
+from app.services.ai_privacy import minimize_for_external_ai
 
 _SYSTEM_PROMPT = (
     "Você é um assistente de suporte técnico. Escreva um rascunho de resposta em "
@@ -43,7 +44,7 @@ def suggest_reply(payload: AIReplyRequest) -> AIReplyResponse:
         raise HTTPException(status_code=503, detail="Provedor de IA não configurado")
     messages = [
         {"role": "system", "content": _SYSTEM_PROMPT},
-        {"role": "user", "content": json.dumps({"title": payload.title, "description": payload.description}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"title": minimize_for_external_ai(payload.title), "description": minimize_for_external_ai(payload.description)}, ensure_ascii=False)},
     ]
     try:
         if provider == "groq":
