@@ -88,8 +88,8 @@ def test_endpoint_authenticated(monkeypatch):
         "summary": "O atendimento foi iniciado e está em andamento.",
         "provider": "mock", "activities_considered": 2,
     })
-    app.dependency_overrides[get_current_user] = lambda: object()
-    app.dependency_overrides[get_db] = lambda: object()
+    app.dependency_overrides[get_current_user] = lambda: type("TestUser", (), {"id": "test-user"})()
+    app.dependency_overrides[get_db] = lambda: type("TestUser", (), {"id": "test-user"})()
     try:
         with TestClient(app) as client:
             response = client.post(f"/api/v1/tickets/{TICKET_ID}/activities/ai-summary")

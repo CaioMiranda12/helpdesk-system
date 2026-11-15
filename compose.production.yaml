@@ -1,0 +1,47 @@
+# Exemplo para servidor com proxy reverso HTTPS externo.
+# Portas publicadas apenas em loopback. Não execute este arquivo isoladamente
+# sem configurar DNS, TLS, proxy e segredos no servidor.
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: helpdesk
+      POSTGRES_USER: helpdesk_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configure POSTGRES_PASSWORD}
+    volumes:
+      - helpdesk_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U helpdesk_user -d helpdesk"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Configure DATABASE_URL para o banco db}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Configure JWT_SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      APP_ENVIRONMENT: production
+      CORS_ORIGINS: ${CORS_ORIGINS:?Configure a origem HTTPS do frontend}
+      AI_PROVIDER: ${AI_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:?Configure URL HTTPS publica da API}
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+volumes:
+  helpdesk_pgdata:

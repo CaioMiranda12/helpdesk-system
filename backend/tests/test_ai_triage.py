@@ -31,7 +31,7 @@ def test_triage_requires_authentication():
 
 
 def test_triage_endpoint_authenticated_without_database():
-    app.dependency_overrides[get_current_user] = lambda: object()
+    app.dependency_overrides[get_current_user] = lambda: type("TestUser", (), {"id": "test-user"})()
 
     try:
         with patch(

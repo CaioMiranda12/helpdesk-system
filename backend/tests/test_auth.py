@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
+from app.core.rate_limit import limiter
 from app.core.security import hash_password
 from app.db.base import Base
 from app.db.session import get_db
@@ -13,6 +14,7 @@ from app.models import User
 
 @pytest.fixture
 def auth_client():
+    limiter.clear()
     engine = create_engine("sqlite+pysqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     @event.listens_for(engine, "connect")
     def functions(conn, _):
@@ -31,6 +33,7 @@ def auth_client():
     try:
         yield TestClient(app)
     finally:
+        limiter.clear()
         app.dependency_overrides.clear()
         Base.metadata.drop_all(engine)
         engine.dispose()

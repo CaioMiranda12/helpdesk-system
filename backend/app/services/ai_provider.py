@@ -11,6 +11,7 @@ from pydantic import ValidationError
 from app.core.config import get_settings
 from app.schemas.ai_triage import AITriageRequest, AITriageResponse
 from app.services.ai_triage import suggest_triage
+from app.services.ai_privacy import minimize_for_external_ai
 
 
 _SYSTEM_PROMPT = (
@@ -45,8 +46,8 @@ def _messages(payload: AITriageRequest) -> list[dict[str, str]]:
             "role": "user",
             "content": json.dumps(
                 {
-                    "title": payload.title,
-                    "description": payload.description,
+                    "title": minimize_for_external_ai(payload.title),
+                    "description": minimize_for_external_ai(payload.description),
                 },
                 ensure_ascii=False,
             ),

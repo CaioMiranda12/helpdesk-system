@@ -53,7 +53,7 @@ def test_reply_endpoint_with_mock_and_validation(monkeypatch):
     monkeypatch.setattr(ai, "run_reply", lambda payload: ai_reply.AIReplyResponse(
         suggestion="Olá! Estamos analisando seu chamado e retornaremos com orientações.", provider="mock"
     ))
-    app.dependency_overrides[get_current_user] = lambda: object()
+    app.dependency_overrides[get_current_user] = lambda: type("TestUser", (), {"id": "test-user"})()
     try:
         with TestClient(app) as client:
             good = client.post("/api/v1/ai/reply-suggestion", json=PAYLOAD.model_dump())
