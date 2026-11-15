@@ -28,3 +28,19 @@ export const activitiesApi = {
     return data;
   },
 };
+
+/** Resumo gerado sob demanda; não altera atividades. */
+export interface AIActivitySummary {
+  summary: string;
+  provider: string;
+  activities_considered: number;
+}
+
+export const aiActivitySummaryApi = {
+  async summarize(ticketId: string): Promise<AIActivitySummary> {
+    const { data } = await http.post<AIActivitySummary>(
+      `/api/v1/tickets/${ticketId}/activities/ai-summary`
+    );
+    return data;
+  },
+};

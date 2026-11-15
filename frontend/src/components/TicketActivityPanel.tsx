@@ -3,6 +3,7 @@ import { ACTIVITY_PAGE_SIZE, activitiesApi } from '../services/activities';
 import type { TicketActivity } from '../services/activities';
 import { errorMessage } from '../services/api';
 import { statusLabels } from '../types';
+import { AIActivitySummaryPanel } from './AIActivitySummaryPanel';
 import type { TicketStatus } from '../types';
 
 function description(activity: TicketActivity): string {
@@ -17,6 +18,7 @@ function description(activity: TicketActivity): string {
 
 export function TicketActivityPanel({ ticketId, refreshKey }: { ticketId: string; refreshKey: number }) {
   const [activities, setActivities] = useState<TicketActivity[]>([]);
+  const [historyVersion, setHistoryVersion] = useState(0);
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -84,6 +86,7 @@ export function TicketActivityPanel({ ticketId, refreshKey }: { ticketId: string
       await activitiesApi.comment(ticketId, body.trim());
       setBody('');
       await reload();
+      setHistoryVersion(n => n + 1);
     } catch (err) { setError(errorMessage(err)); }
     finally { setSaving(false); }
   }
@@ -95,6 +98,7 @@ export function TicketActivityPanel({ ticketId, refreshKey }: { ticketId: string
       <textarea id="activity-body" value={body} maxLength={2000} rows={3} onChange={event => setBody(event.target.value)} placeholder="Descreva uma atualização do atendimento..." />
       <button className="button primary" type="submit" disabled={saving || !body.trim()}>{saving ? 'Enviando...' : 'Publicar comentário'}</button>
     </form>
+    {!loading && <AIActivitySummaryPanel ticketId={ticketId} refreshKey={refreshKey + historyVersion} hasActivities={activities.length > 0} />}
     {error && <p role="alert" className="alert error">{error} <button type="button" onClick={() => void reload()}>Tentar novamente</button></p>}
     {loading ? <p role="status">Carregando histórico...</p> : activities.length === 0 ? <p className="muted">Nenhuma atividade registrada ainda.</p> : <>
       <ol className="activity-list">{activities.map(activity => <li key={activity.id} className="activity-item">
