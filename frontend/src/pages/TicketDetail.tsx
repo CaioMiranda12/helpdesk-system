@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TicketForm } from '../components/TicketForm';
 import { TicketActivityPanel } from '../components/TicketActivityPanel';
+import { AIReplyPanel } from '../components/AIReplyPanel';
 import { agentsApi, errorMessage, ticketsApi } from '../services/api';
 import type { Agent } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -71,6 +72,7 @@ export function TicketDetail() {
         {agentsError && <p className="alert error" role="alert">{agentsError}</p>}
       </div>}
       <div className="detail-row"><span>Atualizado</span><strong>{new Date(ticket.updated_at).toLocaleString('pt-BR')}</strong></div><div className="status-actions"><h3>Próxima etapa</h3>{nextStatuses[ticket.status].map(status => <button key={status} className="button primary" disabled={changing} onClick={() => changeStatus(status)}>{changing ? 'Atualizando...' : `Mover para: ${statusLabels[status]}`}</button>)}</div></aside></div>}
+    {!editing && <AIReplyPanel key={`${ticket.id}:${ticket.updated_at}`} title={ticket.title} description={ticket.description} />}
     <TicketActivityPanel ticketId={ticket.id} refreshKey={activityRefresh} />
   </>;
 }
