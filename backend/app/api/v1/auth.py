@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from app.core.rate_limit import limit_login
 from app.core.security import create_access_token, get_current_user, hash_password, require_admin, verify_password
 from app.db.session import get_db
 from app.models.user import User
@@ -10,7 +11,7 @@ router = APIRouter(prefix="/api/v1", tags=["Autenticação"])
 
 
 @router.post("/auth/login", response_model=TokenResponse)
-def login(payload: LoginRequest, db: Session = Depends(get_db)):
+def login(payload: LoginRequest, db: Session = Depends(get_db), _limit: None = Depends(limit_login)):
     user = db.scalar(select(User).where(User.email == str(payload.email).lower()))
     if user is None or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")

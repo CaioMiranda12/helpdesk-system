@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from app.core.rate_limit import limit_ai
 from app.core.security import get_current_user
 from app.schemas.ai_triage import AITriageRequest, AITriageResponse
 from app.schemas.ai_reply import AIReplyRequest, AIReplyResponse
@@ -9,10 +10,10 @@ router = APIRouter(prefix="/api/v1/ai", tags=["Assistência com IA"], dependenci
 
 
 @router.post("/triage", response_model=AITriageResponse)
-def triage(payload: AITriageRequest) -> AITriageResponse:
+def triage(payload: AITriageRequest, _limit: None = Depends(limit_ai)) -> AITriageResponse:
     return run_triage(payload)
 
 
 @router.post("/reply-suggestion", response_model=AIReplyResponse)
-def reply_suggestion(payload: AIReplyRequest) -> AIReplyResponse:
+def reply_suggestion(payload: AIReplyRequest, _limit: None = Depends(limit_ai)) -> AIReplyResponse:
     return run_reply(payload)

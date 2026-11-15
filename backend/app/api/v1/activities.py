@@ -1,6 +1,7 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
+from app.core.rate_limit import limit_ai
 from app.core.security import get_current_user
 from app.db.session import get_db
 from app.models.user import User
@@ -21,5 +22,5 @@ def create_comment(ticket_id: UUID, payload: CommentCreate, db: Session = Depend
 
 
 @router.post("/{ticket_id}/activities/ai-summary", response_model=AIActivitySummaryResponse)
-def ai_activity_summary(ticket_id: UUID, db: Session = Depends(get_db)) -> AIActivitySummaryResponse:
+def ai_activity_summary(ticket_id: UUID, db: Session = Depends(get_db), _limit: None = Depends(limit_ai)) -> AIActivitySummaryResponse:
     return summarize_activities(db, ticket_id)
