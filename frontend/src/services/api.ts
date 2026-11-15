@@ -101,3 +101,19 @@ export const aiTriageApi = {
     return data;
   },
 };
+
+/** Rascunho de resposta: nunca é publicado automaticamente. */
+export interface AIReplySuggestion {
+  suggestion: string;
+  provider: string;
+}
+
+export const aiReplyApi = {
+  async suggest(title: string, description: string): Promise<AIReplySuggestion> {
+    const { data } = await http.post<AIReplySuggestion>('/api/v1/ai/reply-suggestion', {
+      title: title.trim(),
+      description: description.trim(),
+    });
+    return data;
+  },
+};
