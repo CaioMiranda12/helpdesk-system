@@ -12,6 +12,30 @@ A aplicação está publicada na nuvem, com frontend e backend hospedados no Ren
 
 > O projeto utiliza serviços gratuitos de hospedagem. O primeiro acesso pode demorar alguns instantes devido à inicialização dos serviços.
 
+## Demonstração visual
+
+### Tela de login
+
+![Tela de login do Helpdesk](docs/screenshots/login.png)
+
+### Dashboard
+
+Visão geral dos chamados e indicadores por status e prioridade.
+
+![Dashboard do Helpdesk](docs/screenshots/dashboard.png)
+
+### Gestão de chamados
+
+Listagem de chamados com pesquisa, filtros e paginação.
+
+![Listagem de chamados](docs/screenshots/chamados.png)
+
+### Detalhes do chamado
+
+Visualização das informações, comentários, histórico de atividades e funcionalidades de IA.
+
+![Detalhes de um chamado](docs/screenshots/detalhes.png)
+
 ## Tecnologias
 
 **Backend**
