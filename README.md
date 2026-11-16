@@ -243,10 +243,3 @@ O projeto também utiliza GitHub Actions para automatizar verificações.
 - [Sprint 13 — Testes de frontend](docs/sprint-13.md)
 - [Sprint 14 — Preparação para deploy](docs/sprint-14.md)
 
-## Observações
-
-Este projeto foi desenvolvido para aprendizado e demonstração de competências em desenvolvimento full-stack.
-
-Embora implemente controles de autenticação e segurança, sua publicação como projeto de portfólio não representa uma auditoria completa de segurança para uso empresarial.
-
-As credenciais administrativas e as variáveis sensíveis não são disponibilizadas publicamente.
